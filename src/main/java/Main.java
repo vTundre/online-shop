@@ -58,7 +58,7 @@ public class Main {
 
         //initial database setup
         DatabaseDAO databaseDAO = new JDBCDatabaseDAO(dataSource, passwordService);
-        databaseDAO.init();
+        //databaseDAO.init();
 
         //servlets
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
