@@ -14,6 +14,7 @@ import security.service.impl.DefaultSecurityService;
 import security.web.filter.RoleFilter;
 import security.web.servlet.LoginServlet;
 import security.web.servlet.LogoutServlet;
+import security.web.servlet.NotFoundServlet;
 import security.web.servlet.UserAddServlet;
 import app.service.ProductService;
 import app.service.UserService;
@@ -63,7 +64,7 @@ public class Main {
         //servlets
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
-        context.addServlet(new ServletHolder(new LoginServlet(securityService)), "/");
+        context.addServlet(new ServletHolder(new NotFoundServlet()), "/");
         context.addServlet(new ServletHolder(new LoginServlet(securityService)), "/login");
         context.addServlet(new ServletHolder(new LogoutServlet(securityService)), "/logout");
         context.addServlet(new ServletHolder(new UserAddServlet(userService, securityService)), "/user/add/*");

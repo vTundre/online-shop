@@ -23,14 +23,13 @@ public class JDBCDatabaseDAO implements DatabaseDAO {
             runStatement(statement, "drop sequence user_seq");
             runStatement(statement, "drop table public.user");
             runStatement(statement, "create sequence user_seq");
-            runStatement(statement, "create table public.user(id integer, name varchar(100), password varchar(100), role varchar(100))");
+            runStatement(statement, "create table public.user(id integer, name varchar(1000, password varchar(1000), role varchar(1000))");
 
             runStatement(statement, "drop sequence product_seq");
             runStatement(statement, "drop table product");
             runStatement(statement, "create sequence product_seq");
             runStatement(statement, "create table product(id integer, name varchar(100), description varchar(100), price numeric)");
 
-            runStatement(statement, "insert into public.user values(nextval('user_seq'), 'jula', '" + passwordService.getSaltedHash("123") + "', 'ADMIN')");
             runStatement(statement, "insert into public.user values(nextval('user_seq'), 'admin', '" + passwordService.getSaltedHash("1") + "', 'ADMIN')");
             runStatement(statement, "insert into public.user values(nextval('user_seq'), 'user', '" + passwordService.getSaltedHash("1") + "', 'USER')");
         } catch (Exception e) {
