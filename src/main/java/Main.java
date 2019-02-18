@@ -64,11 +64,12 @@ public class Main {
         //servlets
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
-        context.addServlet(new ServletHolder(new NotFoundServlet()), "/");
+        context.addServlet(new ServletHolder(new NotFoundServlet()), "/*");
         context.addServlet(new ServletHolder(new LoginServlet(securityService)), "/login");
         context.addServlet(new ServletHolder(new LogoutServlet(securityService)), "/logout");
         context.addServlet(new ServletHolder(new UserAddServlet(userService, securityService)), "/user/add/*");
 
+        context.addServlet(new ServletHolder(new ProductShowServlet(productService, securityService)), "");
         context.addServlet(new ServletHolder(new ProductShowServlet(productService, securityService)), "/products");
         context.addServlet(new ServletHolder(new ProductAddServlet(productService)), "/product/add/*");
         context.addServlet(new ServletHolder(new ProductEditServlet(productService)), "/product/edit/*");
@@ -76,9 +77,9 @@ public class Main {
 
         //filters
         //authorization filters
-        context.addFilter(new FilterHolder(new AuthFilter(securityService)), "/products",
+        context.addFilter(new FilterHolder(new AuthFilter(securityService)), "",
                 EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD));
-        context.addFilter(new FilterHolder(new AuthFilter(securityService)), "/product/*",
+        context.addFilter(new FilterHolder(new AuthFilter(securityService)), "/products",
                 EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD));
 
         //admin filters
