@@ -36,6 +36,7 @@
 </b>
 
 <h4 align="center">Edit product</h4>
+<div class="container">
 <form action="/product/edit/" method="POST">
     <div class="form-group">
         <input type="hidden" name="id" value="${product.id}"/>
@@ -45,12 +46,13 @@
         <input type="text" class="form-control" id="inputDescription" required name="description" maxlength="100"
                value="${product.description}">
         <label for="inputPrice">Price</label>
-        <input type="number" class="form-control" id="inputPrice" step=".01" min="0" max="1000000" value="${product.price}"
+        <input type="number" class="form-control" id="inputPrice" step=".01" min="0" max="1000000" value="${product.price?string.computer}"
                required name="price">
         <br>
         <input class="nav-link" type="submit" value="Submit">
     </div>
 </form>
+</div>
 </body>
 </html>
 
