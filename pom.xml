@@ -100,22 +100,5 @@
                 <version>2.0.6</version>
             </plugin>
         </plugins>
-
-        <resources>
-            <resource>
-                <directory>src/main/resources/config</directory>
-                <includes>
-                    <include>*</include>
-                </includes>
-                <targetPath>../src/main/resources/config/</targetPath>
-            </resource>
-            <resource>
-                <directory>src/main/resources/webapp/</directory>
-                <includes>
-                    <include>templates/*</include>
-                </includes>
-                <targetPath>../src/main/resources/webapp/</targetPath>
-            </resource>
-        </resources>
     </build>
 </project>

@@ -1,6 +1,6 @@
 package config;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {
@@ -20,7 +20,6 @@ public class Config {
     public static Properties getProperties() {
         return instance().properties;
     }
-
     public static int getPort() {
         return port;
     }
@@ -43,13 +42,15 @@ public class Config {
 
     private static synchronized Config instance() {
         if (config == null) {
+
             config = new Config();
             config.properties = new Properties();
-            try (FileInputStream fileInputStream = new FileInputStream(propertiesLocation)
+            try (InputStream resourceAsStream = ClassLoader.getSystemResourceAsStream(propertiesLocation)
             ) {
-                config.properties.load(fileInputStream);
+                config.properties.load(resourceAsStream);
             } catch (Exception e) {
                 e.printStackTrace();
+                throw new RuntimeException(e);
             }
 
             //heroku

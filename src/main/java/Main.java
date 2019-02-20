@@ -33,7 +33,7 @@ import java.util.EnumSet;
 
 
 public class Main {
-    private static final String PROPERTIES_LOCATION = "src/main/resources/config/application.properties";
+    private static final String PROPERTIES_LOCATION = "config/application.properties";
 
     public static void main(String[] args) throws Exception {
 
