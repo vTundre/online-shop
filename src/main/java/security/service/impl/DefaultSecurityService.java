@@ -30,7 +30,7 @@ public class DefaultSecurityService implements SecurityService {
     public boolean hasAccess(Cookie[] cookies) {
         List<String> tokensList = getTokensFromCookies(cookies);
         Session session = getSessionByTokens(tokensList);
-        return session != null ? true : false;
+        return session != null;
     }
 
     @Override
@@ -59,9 +59,8 @@ public class DefaultSecurityService implements SecurityService {
     @Override
     public String getSessionTokenByNameAndPassword(String name, String password) {
         Session session = getSessionByNameAndPassword(name, password);
-        return session != null ? session.getToken() : new String();
+        return session != null ? session.getToken() : "";
     }
-
 
     private Session getSessionByNameAndPassword(String name, String password) {
         User user = userService.getByName(name);
@@ -73,11 +72,10 @@ public class DefaultSecurityService implements SecurityService {
                 if (session.getUser().getName().equals(name)) {
                     if (session.getExpireDate().isAfter(LocalDateTime.now())) {
                         return session;
-                    } else {
-                        sessionList.remove(session);
-                        System.out.println("Expired session has been deleted");
-                        break;
                     }
+                    sessionList.remove(session);
+                    System.out.println("Expired session has been deleted");
+                    break;
                 }
             }
             //No valid session found, create new one
@@ -95,11 +93,10 @@ public class DefaultSecurityService implements SecurityService {
             if (tokenList.contains(session.getToken())) {
                 if (session.getExpireDate().isAfter(LocalDateTime.now())) {
                     return session;
-                } else {
-                    sessionList.remove(session);
-                    System.out.println("Expired session has been deleted");
-                    break;
                 }
+                sessionList.remove(session);
+                System.out.println("Expired session has been deleted");
+                break;
             }
         }
         return null;

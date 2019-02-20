@@ -31,7 +31,7 @@ public class UserAddServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String login = request.getParameter("login");
+        String login = request.getParameter("login").toLowerCase();
         String password = request.getParameter("password");
 
         if (userService.getByName(login) == null) {
