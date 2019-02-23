@@ -2,6 +2,7 @@ package security.web.servlet;
 
 import security.service.SecurityService;
 import app.web.page.PageGenerator;
+import service.ServiceLocator;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +15,8 @@ import java.util.Map;
 public class LoginServlet extends HttpServlet {
     private SecurityService securityService;
 
-    public LoginServlet(SecurityService securityService) {
-        this.securityService = securityService;
+    public LoginServlet() {
+        this.securityService = ServiceLocator.getService(SecurityService.class);
     }
 
     @Override
@@ -37,8 +38,7 @@ public class LoginServlet extends HttpServlet {
             Cookie cookie = new Cookie("user-token", token);
             response.addCookie(cookie);
             response.sendRedirect("/products");
-        }
-        else {
+        } else {
             Map<String, Object> pageVariables = new HashMap<>();
             pageVariables.put("message", "Invalid user name or password");
 

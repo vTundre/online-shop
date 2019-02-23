@@ -1,6 +1,7 @@
 package app.web.servlet;
 
 import app.service.ProductService;
+import service.ServiceLocator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +11,8 @@ import java.io.IOException;
 public class ProductDeleteServlet extends HttpServlet {
     private ProductService productService;
 
-    public ProductDeleteServlet(ProductService productService) {
-        this.productService = productService;
+    public ProductDeleteServlet() {
+        this.productService = ServiceLocator.getService(ProductService.class);
     }
 
     @Override

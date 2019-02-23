@@ -1,6 +1,7 @@
 package security.web.filter;
 
 import security.service.SecurityService;
+import service.ServiceLocator;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +12,8 @@ public class AuthFilter implements Filter {
 
     private SecurityService securityService;
 
-    public AuthFilter(SecurityService securityService) {
-        this.securityService = securityService;
+    public AuthFilter() {
+        this.securityService = ServiceLocator.getService(SecurityService.class);
     }
 
     @Override

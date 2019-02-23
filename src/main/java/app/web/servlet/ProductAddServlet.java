@@ -3,6 +3,7 @@ package app.web.servlet;
 import app.entity.Product;
 import app.service.ProductService;
 import app.web.page.PageGenerator;
+import service.ServiceLocator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +13,8 @@ import java.io.IOException;
 public class ProductAddServlet extends HttpServlet {
     private ProductService productService;
 
-    public ProductAddServlet(ProductService productService) {
-        this.productService = productService;
+    public ProductAddServlet() {
+        this.productService = ServiceLocator.getService(ProductService.class);
     }
 
     @Override

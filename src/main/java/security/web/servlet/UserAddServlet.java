@@ -5,6 +5,7 @@ import app.entity.UserRole;
 import security.service.SecurityService;
 import app.service.UserService;
 import app.web.page.PageGenerator;
+import service.ServiceLocator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +18,9 @@ public class UserAddServlet extends HttpServlet {
     private UserService userService;
     private SecurityService securityService;
 
-    public UserAddServlet(UserService userService, SecurityService securityService) {
-        this.userService = userService;
-        this.securityService = securityService;
+    public UserAddServlet() {
+        this.userService = ServiceLocator.getService(UserService.class);
+        this.securityService = ServiceLocator.getService(SecurityService.class);
     }
 
     @Override

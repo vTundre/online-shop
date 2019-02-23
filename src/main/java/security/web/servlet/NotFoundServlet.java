@@ -1,13 +1,15 @@
 package security.web.servlet;
 
 import app.web.page.PageGenerator;
+import service.ServiceLocator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class NotFoundServlet extends  HttpServlet{
+public class NotFoundServlet extends HttpServlet {
+    private String prop = ServiceLocator.getService(String.class);
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

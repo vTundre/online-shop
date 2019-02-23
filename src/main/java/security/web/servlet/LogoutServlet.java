@@ -1,6 +1,7 @@
 package security.web.servlet;
 
 import security.service.SecurityService;
+import service.ServiceLocator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +12,8 @@ public class LogoutServlet extends HttpServlet {
 
     private SecurityService securityService;
 
-    public LogoutServlet(SecurityService securityService) {
-        this.securityService = securityService;
+    public LogoutServlet() {
+        this.securityService = ServiceLocator.getService(SecurityService.class);
     }
 
     @Override

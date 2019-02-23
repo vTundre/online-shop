@@ -4,6 +4,7 @@ import app.entity.UserRole;
 import security.service.SecurityService;
 import app.service.ProductService;
 import app.web.page.PageGenerator;
+import service.ServiceLocator;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +17,9 @@ public class ProductShowServlet extends HttpServlet {
     private ProductService productService;
     private SecurityService securityService;
 
-    public ProductShowServlet(ProductService productService, SecurityService securityService) {
-        this.productService = productService;
-        this.securityService = securityService;
+    public ProductShowServlet() {
+        this.productService = ServiceLocator.getService(ProductService.class);
+        this.securityService = ServiceLocator.getService(SecurityService.class);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package config;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -45,7 +46,7 @@ public class Config {
 
             config = new Config();
             config.properties = new Properties();
-            try (InputStream resourceAsStream = ClassLoader.getSystemResourceAsStream(propertiesLocation)
+            try (InputStream resourceAsStream = config.getClass().getClassLoader().getResourceAsStream(propertiesLocation)
             ) {
                 config.properties.load(resourceAsStream);
             } catch (Exception e) {

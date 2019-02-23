@@ -2,19 +2,20 @@ package security.web.filter;
 
 import app.entity.UserRole;
 import security.service.SecurityService;
+import service.ServiceLocator;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class RoleFilter implements Filter {
+public abstract class RoleFilter implements Filter {
 
     private SecurityService securityService;
     private UserRole userRole;
 
-    public RoleFilter(SecurityService securityService, UserRole userRole) {
-        this.securityService = securityService;
+    public RoleFilter(UserRole userRole) {
+        this.securityService = ServiceLocator.getService(SecurityService.class);
         this.userRole = userRole;
     }
 
