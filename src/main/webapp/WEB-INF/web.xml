@@ -90,7 +90,6 @@
     </filter>
     <filter-mapping>
         <filter-name>authFilter</filter-name>
-        <url-pattern></url-pattern>
         <url-pattern>/products</url-pattern>
     </filter-mapping>
 
@@ -103,12 +102,4 @@
         <url-pattern>/product/*</url-pattern>
     </filter-mapping>
 
-    <filter>
-        <filter-name>userRoleFilter</filter-name>
-        <filter-class>security.web.filter.UserRoleFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>userRoleFilter</filter-name>
-        <url-pattern>/logout</url-pattern>
-    </filter-mapping>
 </web-app>

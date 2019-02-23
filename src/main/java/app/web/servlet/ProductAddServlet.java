@@ -33,6 +33,6 @@ public class ProductAddServlet extends HttpServlet {
 
         productService.insert(product);
 
-        response.sendRedirect("/products");
+        response.sendRedirect("../products");
     }
 }

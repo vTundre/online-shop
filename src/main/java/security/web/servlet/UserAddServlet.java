@@ -41,7 +41,7 @@ public class UserAddServlet extends HttpServlet {
             user.setPassword(securityService.getPasswordService().getSaltedHash(password));
             user.setRole(UserRole.USER.getName());
             userService.insert(user);
-            response.sendRedirect("/login");
+            response.sendRedirect("../login");
         } else {
             Map<String, Object> pageVariables = new HashMap<>();
             pageVariables.put("message", "Such user already registered. Please try to login");

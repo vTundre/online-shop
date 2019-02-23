@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
         if (!token.isEmpty()) {
             Cookie cookie = new Cookie("user-token", token);
             response.addCookie(cookie);
-            response.sendRedirect("/products");
+            response.sendRedirect("products");
         } else {
             Map<String, Object> pageVariables = new HashMap<>();
             pageVariables.put("message", "Invalid user name or password");

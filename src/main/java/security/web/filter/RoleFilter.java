@@ -27,7 +27,7 @@ public abstract class RoleFilter implements Filter {
         if (securityService.hasRoleAccess(httpServletRequest.getCookies(), userRole)) {
             chain.doFilter(request, response);
         } else {
-            httpServletResponse.sendRedirect("/login");
+            httpServletResponse.sendRedirect("login");
         }
     }
 

@@ -42,7 +42,7 @@ public class ProductEditServlet extends HttpServlet {
 
         productService.update(product);
 
-        response.sendRedirect("/products");
+        response.sendRedirect("../products");
     }
 
 }

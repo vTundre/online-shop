@@ -24,7 +24,7 @@ public class AuthFilter implements Filter {
         if (securityService.hasAccess(httpServletRequest.getCookies())) {
             chain.doFilter(request, response);
         } else {
-            httpServletResponse.sendRedirect("/login");
+            httpServletResponse.sendRedirect("login");
         }
     }
 
