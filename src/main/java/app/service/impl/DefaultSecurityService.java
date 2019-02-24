@@ -1,11 +1,11 @@
-package security.service.impl;
+package app.service.impl;
 
-import config.Config;
+import app.config.Config;
 import app.entity.User;
 import app.entity.UserRole;
-import security.entity.Session;
-import security.service.PasswordService;
-import security.service.SecurityService;
+import app.entity.Session;
+import app.service.PasswordService;
+import app.service.SecurityService;
 import app.service.UserService;
 
 import javax.servlet.http.Cookie;
@@ -114,8 +114,19 @@ public class DefaultSecurityService implements SecurityService {
         return tokensList;
     }
 
-    @Override
     public PasswordService getPasswordService() {
         return passwordService;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public void setPasswordService(PasswordService passwordService) {
+        this.passwordService = passwordService;
     }
 }

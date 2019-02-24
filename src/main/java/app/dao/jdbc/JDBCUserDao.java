@@ -57,4 +57,12 @@ public class JDBCUserDao implements UserDao {
         preparedStatement.setString(2, user.getPassword());
         preparedStatement.setString(3, user.getRole());
     }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }

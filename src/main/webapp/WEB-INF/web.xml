@@ -4,102 +4,15 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <!--SERVLETS-->
-    <!--SECURITY-->
     <servlet>
-        <servlet-name>notFoundServlet</servlet-name>
-        <servlet-class>security.web.servlet.NotFoundServlet</servlet-class>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
-        <servlet-name>notFoundServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-        <servlet-name>loginServlet</servlet-name>
-        <servlet-class>security.web.servlet.LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>loginServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>logoutServlet</servlet-name>
-        <servlet-class>security.web.servlet.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>logoutServlet</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>userAddServlet</servlet-name>
-        <servlet-class>security.web.servlet.UserAddServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>userAddServlet</servlet-name>
-        <url-pattern>/user/add/*</url-pattern>
-    </servlet-mapping>
-
-
-    <!--PRODUCT-->
-    <servlet>
-        <servlet-name>productShowServlet</servlet-name>
-        <servlet-class>app.web.servlet.ProductShowServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>productShowServlet</servlet-name>
-        <url-pattern></url-pattern>
-        <url-pattern>/products</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>productAddServlet</servlet-name>
-        <servlet-class>app.web.servlet.ProductAddServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>productAddServlet</servlet-name>
-        <url-pattern>/product/add/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>productEditServlet</servlet-name>
-        <servlet-class>app.web.servlet.ProductEditServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>productEditServlet</servlet-name>
-        <url-pattern>/product/edit/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>productDeleteServlet</servlet-name>
-        <servlet-class>app.web.servlet.ProductDeleteServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>productDeleteServlet</servlet-name>
-        <url-pattern>/product/delete/*</url-pattern>
-    </servlet-mapping>
-
-
-
-    <!--FILTERS-->
-    <filter>
-        <filter-name>authFilter</filter-name>
-        <filter-class>security.web.filter.AuthFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>authFilter</filter-name>
-        <url-pattern>/products</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>adminRoleFilter</filter-name>
-        <filter-class>security.web.filter.AdminRoleFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>adminRoleFilter</filter-name>
-        <url-pattern>/product/*</url-pattern>
-    </filter-mapping>
 
 </web-app>

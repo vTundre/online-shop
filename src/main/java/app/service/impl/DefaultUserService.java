@@ -21,4 +21,12 @@ public class DefaultUserService implements UserService {
     public void insert(User user) {
         userDao.insert(user);
     }
+
+    public UserDao getUserDao() {
+        return userDao;
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
 }

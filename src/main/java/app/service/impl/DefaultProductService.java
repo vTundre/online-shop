@@ -38,4 +38,12 @@ public class DefaultProductService implements ProductService{
     public void update(Product product) {
         productDao.update(product);
     }
+
+    public ProductDao getProductDao() {
+        return productDao;
+    }
+
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 }

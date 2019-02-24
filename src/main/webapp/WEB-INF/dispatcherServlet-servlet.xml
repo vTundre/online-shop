@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="app.web.controller"/>
+    <context:component-scan base-package="app.web.filter"/>
+    <mvc:annotation-driven/>
+
+    <context:property-placeholder location="classpath:/config/application.properties"/>
+
+    <bean id="dataSourceBean" class="org.postgresql.ds.PGSimpleDataSource">
+        <property name="user" value="${db.user}"/>
+        <property name="password" value="${db.password}"/>
+        <property name="URL" value="${db.connect}"/>
+    </bean>
+
+    <bean id="userDaoBean" class="app.dao.jdbc.JDBCUserDao">
+        <property name="dataSource" ref="dataSourceBean"/>
+    </bean>
+
+    <bean id="productDaoBean" class="app.dao.jdbc.JDBCProductDao">
+        <property name="dataSource" ref="dataSourceBean"/>
+    </bean>
+
+    <bean id="userServiceBean" class="app.service.impl.DefaultUserService">
+        <property name="userDao" ref="userDaoBean"/>
+    </bean>
+
+    <bean id="productServiceBean" class="app.service.impl.DefaultProductService">
+        <property name="productDao" ref="productDaoBean"/>
+    </bean>
+
+    <bean id="passwordServiceBean" class="app.service.impl.DefaultPasswordService"/>
+
+    <bean id="securityServiceBean" class="app.service.impl.DefaultSecurityService">
+        <property name="userService" ref="userServiceBean"/>
+        <property name="passwordService" ref="passwordServiceBean"/>
+    </bean>
+
+</beans>

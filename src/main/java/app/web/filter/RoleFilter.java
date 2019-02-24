@@ -1,19 +1,20 @@
-package security.web.filter;
+package app.web.filter;
 
-import security.service.SecurityService;
-import service.ServiceLocator;
+import app.entity.UserRole;
+import app.service.SecurityService;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AuthFilter implements Filter {
+public abstract class RoleFilter implements Filter {
 
     private SecurityService securityService;
+    private UserRole userRole;
 
-    public AuthFilter() {
-        this.securityService = ServiceLocator.getService(SecurityService.class);
+    public RoleFilter(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     @Override
@@ -21,7 +22,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-        if (securityService.hasAccess(httpServletRequest.getCookies())) {
+        if (securityService.hasRoleAccess(httpServletRequest.getCookies(), userRole)) {
             chain.doFilter(request, response);
         } else {
             httpServletResponse.sendRedirect("login");
@@ -35,5 +36,6 @@ public class AuthFilter implements Filter {
     @Override
     public void destroy() {
     }
+
 
 }

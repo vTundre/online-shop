@@ -96,6 +96,14 @@ public class JDBCProductDao implements ProductDao {
         }
     }
 
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     private void setProductStatementAttributes(PreparedStatement preparedStatement, Product product) throws SQLException {
         preparedStatement.setString(1, product.getName());
         preparedStatement.setString(2, product.getDescription());

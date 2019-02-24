@@ -1,12 +1,11 @@
-package config;
+package app.config;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {
+    private static final String PROPERTIES_LOCATION = "config/application.properties";
     private static Config config;
-    private static String propertiesLocation;
     private static Properties properties;
 
     private static int port;
@@ -14,13 +13,10 @@ public class Config {
     private static String dbUser;
     private static String dbPassword;
 
-    public static void setPropertiesLocation(String newPropertiesLocation) {
-        propertiesLocation = newPropertiesLocation;
-    }
-
     public static Properties getProperties() {
         return instance().properties;
     }
+
     public static int getPort() {
         return port;
     }
@@ -46,7 +42,7 @@ public class Config {
 
             config = new Config();
             config.properties = new Properties();
-            try (InputStream resourceAsStream = config.getClass().getClassLoader().getResourceAsStream(propertiesLocation)
+            try (InputStream resourceAsStream = config.getClass().getClassLoader().getResourceAsStream(PROPERTIES_LOCATION)
             ) {
                 config.properties.load(resourceAsStream);
             } catch (Exception e) {
@@ -58,8 +54,7 @@ public class Config {
             String envPort = System.getenv("PORT");
             if (envPort == null) {
                 port = Integer.parseInt(instance().properties.getProperty("port"));
-            }
-            else{
+            } else {
                 port = Integer.parseInt(envPort);
             }
 

@@ -1,7 +1,7 @@
 package app.dao.jdbc;
 
 import app.dao.DatabaseDAO;
-import security.service.PasswordService;
+import app.service.PasswordService;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

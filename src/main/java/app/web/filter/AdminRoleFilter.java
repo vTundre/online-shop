@@ -1,4 +1,4 @@
-package security.web.filter;
+package app.web.filter;
 
 import app.entity.UserRole;
 
