@@ -4,6 +4,7 @@ import app.entity.UserRole;
 
 public class UserRoleFilter extends RoleFilter {
     public UserRoleFilter(){
-        super(UserRole.USER);
+        super();
+        super.setUserRole(UserRole.USER);
     }
 }
