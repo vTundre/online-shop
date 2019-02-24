@@ -47,14 +47,14 @@ public class AdminController {
     @GetMapping(path = "login")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String showLogin() throws IOException {
+    public String showLogin() {
         return PageGenerator.generatePage("user_login.html");
     }
 
     @GetMapping(path = "/*")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String showPageNotFound() throws IOException {
+    public String showPageNotFound() {
         return PageGenerator.generatePage("page_not_found.html");
     }
 }

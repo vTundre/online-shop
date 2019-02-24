@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,14 +28,14 @@ public class ProductController {
     @GetMapping(path = "product/add")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String showAddProduct() throws IOException {
+    public String showAddProduct() {
         return PageGenerator.generatePage("product_add.html");
     }
 
     @GetMapping("product/edit")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String showEditUser(@RequestParam int id) throws IOException {
+    public String showEditUser(@RequestParam int id) {
         Product product = productService.findById(id);
 
         Map<String, Object> pageVariables = new HashMap<>();
@@ -47,7 +46,7 @@ public class ProductController {
     @GetMapping(path = "products")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String showAllProducts(HttpServletRequest request) throws IOException {
+    public String showAllProducts(HttpServletRequest request) {
         Map<String, Object> pageVariables = new HashMap<>();
         pageVariables.put("products", productService.findAll());
 

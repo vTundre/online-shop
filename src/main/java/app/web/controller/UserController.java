@@ -29,7 +29,7 @@ public class UserController {
     @GetMapping(path = "user/add")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String showAddUser() throws IOException {
+    public String showAddUser() {
         return PageGenerator.generatePage("user_add.html");
     }
 
