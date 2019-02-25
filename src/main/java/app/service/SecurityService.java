@@ -1,16 +1,15 @@
 package app.service;
 
 import app.entity.UserRole;
-import app.service.PasswordService;
 
-import javax.servlet.http.Cookie;
+import java.util.List;
 
 public interface SecurityService {
-    boolean hasAccess(Cookie[] cookies);
+    boolean hasAccess(List<String> tokens);
 
-    boolean hasRoleAccess(Cookie[] cookies, UserRole userRole);
+    boolean hasRoleAccess(List<String> tokens, UserRole userRole);
 
-    void deleteSession(Cookie[] cookies);
+    void deleteSession(List<String> tokens);
 
     String getSessionTokenByNameAndPassword(String name, String password);
 

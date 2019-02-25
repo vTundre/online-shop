@@ -10,13 +10,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JDBCUserDao implements UserDao {
+public class JdbcUserDao implements UserDao {
     private static final String SQL_FIND_BY_NAME_QUERY = "select id, name, password, role from public.user where name = ?";
     private static final String SQL_INSERT = "insert into public.user values(nextval('user_seq'), ?, ?, ?)";
 
     private DataSource dataSource;
 
-    public JDBCUserDao(DataSource dataSource) {
+    public JdbcUserDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

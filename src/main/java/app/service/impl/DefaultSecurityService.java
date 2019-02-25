@@ -1,14 +1,13 @@
 package app.service.impl;
 
 import app.config.Config;
+import app.entity.Session;
 import app.entity.User;
 import app.entity.UserRole;
-import app.entity.Session;
 import app.service.PasswordService;
 import app.service.SecurityService;
 import app.service.UserService;
 
-import javax.servlet.http.Cookie;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +26,14 @@ public class DefaultSecurityService implements SecurityService {
     }
 
     @Override
-    public boolean hasAccess(Cookie[] cookies) {
-        List<String> tokensList = getTokensFromCookies(cookies);
-        Session session = getSessionByTokens(tokensList);
+    public boolean hasAccess(List<String> tokens) {
+        Session session = getSessionByToken(tokens);
         return session != null;
     }
 
     @Override
-    public boolean hasRoleAccess(Cookie[] cookies, UserRole role) {
-        List<String> tokensList = getTokensFromCookies(cookies);
-        Session session = getSessionByTokens(tokensList);
+    public boolean hasRoleAccess(List<String> tokens, UserRole role) {
+        Session session = getSessionByToken(tokens);
         if (session == null) {
             return false;
         }
@@ -45,10 +42,9 @@ public class DefaultSecurityService implements SecurityService {
     }
 
     @Override
-    public void deleteSession(Cookie[] cookies) {
-        List<String> tokensList = getTokensFromCookies(cookies);
+    public void deleteSession(List<String> tokens) {
         for (Session session : sessionList) {
-            if (tokensList.contains(session.getToken())) {
+            if (tokens.contains(session.getToken())) {
                 sessionList.remove(session);
                 System.out.println("Session has been deleted");
                 break;
@@ -64,7 +60,6 @@ public class DefaultSecurityService implements SecurityService {
 
     private Session getSessionByNameAndPassword(String name, String password) {
         User user = userService.getByName(name);
-
         //has access
         if (user != null && passwordService.check(password, user.getPassword())) {
             //check if there is a valid session for this user
@@ -88,9 +83,9 @@ public class DefaultSecurityService implements SecurityService {
         return null;
     }
 
-    private Session getSessionByTokens(List<String> tokenList) {
+    private Session getSessionByToken(List<String> tokens) {
         for (Session session : sessionList) {
-            if (tokenList.contains(session.getToken())) {
+            if (tokens.contains(session.getToken())) {
                 if (session.getExpireDate().isAfter(LocalDateTime.now())) {
                     return session;
                 }
@@ -100,18 +95,6 @@ public class DefaultSecurityService implements SecurityService {
             }
         }
         return null;
-    }
-
-    private List<String> getTokensFromCookies(Cookie[] cookies) {
-        List<String> tokensList = new ArrayList<>();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("user-token")) {
-                    tokensList.add(cookie.getValue());
-                }
-            }
-        }
-        return tokensList;
     }
 
     public PasswordService getPasswordService() {

@@ -1,4 +1,4 @@
-package app.web.page;
+package app.web;
 
 import app.config.Config;
 import freemarker.template.Configuration;

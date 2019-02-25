@@ -4,12 +4,13 @@ import app.entity.User;
 import app.entity.UserRole;
 import app.service.SecurityService;
 import app.service.UserService;
-import app.web.page.PageGenerator;
+import app.web.PageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,15 +20,12 @@ import java.util.Map;
 @Controller
 public class UserController {
     @Autowired
-    @Qualifier("userServiceBean")
     private UserService userService;
 
     @Autowired
-    @Qualifier("securityServiceBean")
     private SecurityService securityService;
 
     @GetMapping(path = "user/add")
-    @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String showAddUser() {
         return PageGenerator.generatePage("user_add.html");
@@ -42,7 +40,7 @@ public class UserController {
             user.setRole(UserRole.USER.getName());
             userService.insert(user);
 
-            response.sendRedirect("login");
+            response.sendRedirect("/login");
         } else {
             Map<String, Object> pageVariables = new HashMap<>();
             pageVariables.put("message", "Such user already registered. Please try to login");

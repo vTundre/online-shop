@@ -3,7 +3,7 @@ package app.web.filter;
 import app.entity.UserRole;
 
 public class UserRoleFilter extends RoleFilter {
-    public UserRoleFilter(){
+    public UserRoleFilter() {
         super();
         super.setUserRole(UserRole.USER);
     }

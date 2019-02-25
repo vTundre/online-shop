@@ -2,25 +2,20 @@ package app.web.filter;
 
 import app.entity.UserRole;
 import app.service.SecurityService;
-import app.web.controller.UserController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import app.web.WebHelper;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
-@Component
-public abstract class RoleFilter implements Filter {
-    @Autowired
-    @Qualifier("securityServiceBean")
+public abstract class RoleFilter extends GenericFilterBean {
+
     private SecurityService securityService;
-
     private UserRole userRole;
 
     @Override
@@ -28,28 +23,17 @@ public abstract class RoleFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
-        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, request.getServletContext());
-        if (securityService.hasRoleAccess(httpServletRequest.getCookies(), userRole)) {
+        if (securityService == null) {
+            ServletContext servletContext = request.getServletContext();
+            WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+            securityService = webApplicationContext.getBean(app.service.impl.DefaultSecurityService.class);
+        }
+        List<String> tokens = new WebHelper().getTokenFromCookies(httpServletRequest.getCookies());
+        if (securityService.hasRoleAccess(tokens, userRole)) {
             chain.doFilter(request, response);
         } else {
-            httpServletResponse.sendRedirect("login");
+            httpServletResponse.sendRedirect("/login");
         }
-    }
-
-    @Override
-    public void init(FilterConfig filterConfig) {
-    }
-
-    @Override
-    public void destroy() {
-    }
-
-    public SecurityService getSecurityService() {
-        return securityService;
-    }
-
-    public void setSecurityService(SecurityService securityService) {
-        this.securityService = securityService;
     }
 
     public UserRole getUserRole() {

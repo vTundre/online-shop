@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JDBCProductDao implements ProductDao {
+public class JdbcProductDao implements ProductDao {
     private static final String SQL_SELECT_ALL = "select id, name, description, price from product order by id";
     private static final String SQL_SELECT_BY_ID = "select id, name, description, price from product where id = ?";
     private static final String SQL_DELETE_BY_ID = "delete from product where id = ?";
@@ -18,7 +18,7 @@ public class JDBCProductDao implements ProductDao {
 
     private DataSource dataSource;
 
-    public JDBCProductDao(DataSource dataSource) {
+    public JdbcProductDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
