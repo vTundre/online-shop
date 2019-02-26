@@ -7,23 +7,24 @@ import app.entity.UserRole;
 import app.service.PasswordService;
 import app.service.SecurityService;
 import app.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class DefaultSecurityService implements SecurityService {
     private static final int sessionExpireHours = Integer.parseInt(Config.getProperties().getProperty("session.expire.hours"));
     private static List<Session> sessionList = new ArrayList<>();
 
+    @Autowired
     private UserService userService;
+    @Autowired
     private PasswordService passwordService;
 
-    public DefaultSecurityService(UserService userService, PasswordService passwordService) {
-        this.userService = userService;
-        this.passwordService = passwordService;
-    }
 
     @Override
     public boolean hasAccess(List<String> tokens) {
@@ -101,15 +102,15 @@ public class DefaultSecurityService implements SecurityService {
         return passwordService;
     }
 
+    public void setPasswordService(PasswordService passwordService) {
+        this.passwordService = passwordService;
+    }
+
     public UserService getUserService() {
         return userService;
     }
 
     public void setUserService(UserService userService) {
         this.userService = userService;
-    }
-
-    public void setPasswordService(PasswordService passwordService) {
-        this.passwordService = passwordService;
     }
 }

@@ -4,14 +4,12 @@ import app.entity.Product;
 import app.entity.UserRole;
 import app.service.ProductService;
 import app.service.SecurityService;
-import app.web.PageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ProductController {
@@ -22,36 +20,26 @@ public class ProductController {
     private SecurityService securityService;
 
     @GetMapping(path = "product/add")
-    @ResponseBody
     public String showAddProduct() {
-        return PageGenerator.generatePage("product_add.html");
+        return "product_add";
     }
-
 
     @GetMapping("product/edit")
-    @ResponseBody
-    public String showEditUser(@RequestParam int id) {
+    public String showEditUser(@RequestParam int id, ModelMap model) {
         Product product = productService.findById(id);
 
-        Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("product", product);
-        return PageGenerator.generatePage("product_edit.html", pageVariables);
+        model.addAttribute("product", product);
+        return "product_edit";
     }
-
 
     @GetMapping(path = "products")
-    @ResponseBody
-    public String showAllProducts(@CookieValue(value = "user-token") List<String> token) {
-        Map<String, Object> pageVariables = new HashMap<>();
-        pageVariables.put("products", productService.findAll());
-
-        String templateName = "product_show.html";
+    public String showAllProducts(@CookieValue(value = "user-token") List<String> token, ModelMap model) {
+        model.addAttribute("products", productService.findAll());
         if (securityService.hasRoleAccess(token, UserRole.ADMIN)) {
-            templateName = "product_show_all.html";
+            return "product_show_all";
         }
-        return PageGenerator.generatePage(templateName, pageVariables);
+        return "product_show";
     }
-
 
     @PostMapping(path = "product/add")
     public String addProduct(@RequestParam String name, @RequestParam String description, @RequestParam Double price) {
@@ -59,19 +47,16 @@ public class ProductController {
         product.setName(name);
         product.setDescription(description);
         product.setPrice(price);
-
         productService.insert(product);
 
         return "redirect:/products";
     }
-
 
     @PostMapping(path = "product/delete")
     public String deleteProduct(@RequestParam int id) {
         productService.deleteById(id);
         return "redirect:/products";
     }
-
 
     @PostMapping("product/edit")
     public String editProduct(@RequestParam int id, @RequestParam String name,
@@ -81,7 +66,6 @@ public class ProductController {
         product.setName(name);
         product.setDescription(description);
         product.setPrice(price);
-
         productService.update(product);
 
         return "redirect:/products";

@@ -2,6 +2,7 @@ package app.service.impl;
 
 import app.service.PasswordService;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -9,6 +10,7 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+@Service
 public class DefaultPasswordService implements PasswordService {
     private static final int ITERATIONS = 20 * 1000;
     private static final int SALT_LENGTH = 32;

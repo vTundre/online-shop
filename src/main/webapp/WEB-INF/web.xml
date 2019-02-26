@@ -6,7 +6,8 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/dispatcherServlet-servlet.xml</param-value>
+        <param-value>/WEB-INF/app-context.xml</param-value>
+        <load-on-startup>1</load-on-startup>
     </context-param>
 
     <listener>
@@ -15,7 +16,7 @@
         </listener-class>
     </listener>
 
-    <!--SERVLET-->
+    <!--Servlet-->
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -27,7 +28,7 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <!--FILTERS-->
+    <!--Filters-->
     <filter>
         <filter-name>authFilter</filter-name>
         <filter-class>app.web.filter.AuthFilter</filter-class>

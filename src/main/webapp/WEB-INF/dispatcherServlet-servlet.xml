@@ -11,38 +11,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="app.web.controller"/>
-    <context:component-scan base-package="app.web.filter"/>
+    <context:component-scan base-package="app.*"/>
     <mvc:annotation-driven/>
 
-    <context:property-placeholder location="classpath:/config/application.properties"/>
-
-    <bean id="dataSource" class="org.postgresql.ds.PGSimpleDataSource">
-        <property name="user" value="${db.user}"/>
-        <property name="password" value="${db.password}"/>
-        <property name="URL" value="${db.connect}"/>
-    </bean>
-
-    <bean id="userDao" class="app.dao.jdbc.JdbcUserDao">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <bean id="productDao" class="app.dao.jdbc.JdbcProductDao">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <bean id="userService" class="app.service.impl.DefaultUserService">
-        <property name="userDao" ref="userDao"/>
-    </bean>
-
-    <bean id="productService" class="app.service.impl.DefaultProductService">
-        <property name="productDao" ref="productDao"/>
-    </bean>
-
-    <bean id="passwordService" class="app.service.impl.DefaultPasswordService"/>
-
-    <bean id="securityService" class="app.service.impl.DefaultSecurityService">
-        <property name="userService" ref="userService"/>
-        <property name="passwordService" ref="passwordService"/>
-    </bean>
 </beans>

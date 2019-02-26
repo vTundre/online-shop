@@ -3,12 +3,14 @@ package app.dao.jdbc;
 import app.dao.ProductDao;
 import app.dao.jdbc.mapper.ProductMapper;
 import app.entity.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class JdbcProductDao implements ProductDao {
     private static final String SQL_SELECT_ALL = "select id, name, description, price from product order by id";
     private static final String SQL_SELECT_BY_ID = "select id, name, description, price from product where id = ?";
@@ -16,84 +18,40 @@ public class JdbcProductDao implements ProductDao {
     private static final String SQL_INSERT = "insert into product(id, name, description, price) values (nextval('product_seq'),?, ?, ?)";
     private static final String SQL_UPDATE_BY_ID = "update product set name = ?, description = ?, price = ? where id = ?";
 
+    @Autowired
     private DataSource dataSource;
-
-    public JdbcProductDao(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     @Override
     public List<Product> findAll() {
-        try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL)) {
-
-            List<Product> list = new ArrayList<>();
-            while (resultSet.next()) {
-                list.add(ProductMapper.mapRow(resultSet));
-            }
-            return list;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        List<Product> products = jdbcTemplate.query(SQL_SELECT_ALL, new ProductMapper());
+        return products;
     }
 
     @Override
     public Product findById(int id) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_BY_ID)) {
-            preparedStatement.setInt(1, id);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                Product product = null;
-                if (resultSet.next()) {
-                    product = ProductMapper.mapRow(resultSet);
-                }
-                return product;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        List<Product> products = jdbcTemplate.query(SQL_SELECT_BY_ID, new ProductMapper(), id);
+        return products.size() == 0 ? null : products.get(0);
     }
 
     @Override
     public void insert(Product product) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT)) {
-            setProductStatementAttributes(preparedStatement, product);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(SQL_INSERT, product.getName(), product.getDescription(), product.getPrice());
     }
 
     @Override
     public void deleteById(int id) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_BY_ID)) {
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(SQL_DELETE_BY_ID, id);
     }
 
     @Override
     public void update(Product product) {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_BY_ID)) {
-
-            setProductStatementAttributes(preparedStatement, product);
-            preparedStatement.setInt(4, product.getId());
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(SQL_UPDATE_BY_ID, product.getName(), product.getDescription(),
+                product.getPrice(), product.getId());
     }
 
     public DataSource getDataSource() {
@@ -103,11 +61,4 @@ public class JdbcProductDao implements ProductDao {
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
-    private void setProductStatementAttributes(PreparedStatement preparedStatement, Product product) throws SQLException {
-        preparedStatement.setString(1, product.getName());
-        preparedStatement.setString(2, product.getDescription());
-        preparedStatement.setDouble(3, product.getPrice());
-    }
-
 }

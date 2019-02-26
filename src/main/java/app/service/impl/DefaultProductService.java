@@ -3,16 +3,16 @@ package app.service.impl;
 import app.dao.ProductDao;
 import app.entity.Product;
 import app.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DefaultProductService implements ProductService{
 
+    @Autowired
     private ProductDao productDao;
-
-    public DefaultProductService(ProductDao productDao) {
-        this.productDao = productDao;
-    }
 
     @Override
     public List<Product> findAll() {
