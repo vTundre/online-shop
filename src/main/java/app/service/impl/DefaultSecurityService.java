@@ -18,7 +18,7 @@ import java.util.UUID;
 @Service
 public class DefaultSecurityService implements SecurityService {
     private static final int sessionExpireHours = Integer.parseInt(Config.getProperties().getProperty("session.expire.hours"));
-    private static List<Session> sessionList = new ArrayList<>();
+    private List<Session> sessionList = new ArrayList<>();
 
     @Autowired
     private UserService userService;

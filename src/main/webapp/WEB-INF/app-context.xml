@@ -11,7 +11,8 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="app.*"/>
+    <context:component-scan base-package="app/dao"/>
+    <context:component-scan base-package="app/service"/>
     <mvc:annotation-driven/>
 
     <context:property-placeholder location="classpath:/config/application.properties"/>
@@ -21,17 +22,6 @@
         <property name="user" value="${db.user}"/>
         <property name="password" value="${db.password}"/>
         <property name="URL" value="${db.connect}"/>
-    </bean>
-
-    <!-- freemarker config -->
-    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="/WEB-INF/ftl/"/>
-    </bean>
-
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <property name="cache" value="true"/>
-        <property name="prefix" value=""/>
-        <property name="suffix" value=".ftl"/>
     </bean>
 
 </beans>
